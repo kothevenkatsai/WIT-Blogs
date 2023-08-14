@@ -1,0 +1,51 @@
+{% include "header.html" %}
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('../static/img/WIT_Main_Building.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1 style="color:rgb(239, 239, 239); text-shadow:2px 2px black;">WIT BLOGS</h1>
+            <span  style="color: rgb(239, 239, 239); " class="subheading"><b>YOUR GO-TO DESTINATION <br> for all college related things</b></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        {% for post in all_posts %}
+        <div class="post-preview">
+          <a href="{{ url_for('show_post', post_id=post.id) }}">
+            <h2 class="post-title">
+              {{post.title}}
+            </h2>
+            <h3 class="post-subtitle">
+              {{post.subtitle}}
+            </h3>
+          </a>
+          <p class="post-meta">Posted by
+            {{post.author.name}}
+            on {{post.date}}
+            {% if post.author.id==current_user.id or current_user.id == 1 %}
+            <a href="{{url_for('delete_post', post_id=post.id) }}">✘</a>
+            {% endif %}
+          </p>
+        </div>
+        {% endfor %}
+
+
+        <!-- New Post -->
+        <div class="clearfix">
+          <a class="btn btn-primary float-right" href="{{url_for('add_new_post')}}">Create New Post</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>
+
+{% include "footer.html" %}
